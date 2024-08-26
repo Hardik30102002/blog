@@ -1,5 +1,5 @@
+import { Client, Databases, ID, Query, Storage } from "appwrite";
 import conf from '../conf/conf.js';
-import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service{
     client = new Client();
@@ -19,14 +19,15 @@ export class Service{
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                slug,
+                ID.unique(),
                 {
                     title,
                     content,
                     featuredImage,
                     status,
-                    userId,
-                }
+                    user:userId,
+                },
+                undefined
             )
         } catch (error) {
             console.log("Appwrite serive :: createPost :: error", error);
